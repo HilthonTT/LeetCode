@@ -3,12 +3,23 @@
 # Each solution is a standalone translation unit compiled ad hoc, so the only
 # thing worth automating is sweeping up what the compiler leaves behind.
 #
-#   make clean   remove every .obj and .exe in the repository
+#   make clean   remove the build output of every solution in the repository
 
 # Recursive wildcard: $(call rwildcard,<dir>/,<pattern>)
 rwildcard = $(foreach d,$(wildcard $(1)*),$(call rwildcard,$(d)/,$(2)) $(filter $(subst *,%,$(2)),$(d)))
 
-ARTIFACTS := $(strip $(call rwildcard,,*.obj) $(call rwildcard,,*.exe))
+SOURCES := $(call rwildcard,,*.cpp)
+
+# Leftovers that give themselves away by their extension, wherever they sit.
+DEBRIS := $(foreach p,*.o *.obj *.exe *.out *.ilk *.pdb,$(call rwildcard,,$(p)))
+
+# A binary linked by GCC or Clang on Unix carries no extension, so the only
+# thing that marks it as build output is its name: the source's, minus the
+# .cpp. Deriving the candidates from the sources also keeps the sweep from
+# touching anything that was not compiled here.
+BINARIES := $(wildcard $(basename $(SOURCES)))
+
+ARTIFACTS := $(strip $(DEBRIS) $(BINARIES))
 
 ifeq ($(OS),Windows_NT)
 # Don't assume a Unix shell: make only finds sh.exe when it is on PATH (Git
@@ -16,7 +27,7 @@ ifeq ($(OS),Windows_NT)
 # through `cmd /C del` with quoted, backslashed paths works either way.
 DELETE = cmd /C del /Q $(subst /,\,$(patsubst %,"%",$(ARTIFACTS)))
 else
-DELETE = rm -f $(ARTIFACTS)
+DELETE = rm -f $(patsubst %,"%",$(ARTIFACTS))
 endif
 
 .PHONY: clean
