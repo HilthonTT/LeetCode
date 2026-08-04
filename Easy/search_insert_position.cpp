@@ -24,7 +24,7 @@ public:
             {
                 right = mid - 1;
             }
-            // if target is larger, search in right haflf
+            // if target is larger, search in right half
             else
             {
                 left = mid + 1;
