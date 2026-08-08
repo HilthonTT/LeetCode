@@ -68,3 +68,18 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Solution binaries. GCC and Clang link to a file named after the source with
+# no extension at all, so nothing in the name marks it as build output the way
+# *.exe does above. Ignore the contents of the solution directories instead and
+# let the sources back in explicitly — another kind of file kept alongside them
+# needs its own exception here.
+Easy/*
+Medium/*
+Hard/*
+!Easy/*.cpp
+!Medium/*.cpp
+!Hard/*.cpp
+!Easy/*.md
+!Medium/*.md
+!Hard/*.md
