@@ -1,6 +1,7 @@
 // 69. Sqrt(x) (Easy)
 // https://leetcode.com/problems/sqrtx/
 
+#include <climits>
 #include <string>
 #include <iostream>
 

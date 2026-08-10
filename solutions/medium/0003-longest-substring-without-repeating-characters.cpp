@@ -94,7 +94,7 @@ int main()
     check("a b c", 3);       // "a b" -- the spaces repeat too
     check("hello world", 6); // " world"
     check("!@#$%^&*()", 10);
-    check("a!a!b", 2);   // "a!" / "!a" / "!b"
+    check("a!a!b", 3);   // "a!b"
     check("A a A a", 3); // "A a" -- 'A' and 'a' differ, the spaces do not
     check("aAbBcC", 6);  // upper and lower are distinct
 

@@ -102,8 +102,12 @@ case $(basename "$cxx") in
         std=${CXXSTD:-c++latest}
         # cl scatters its output over the working directory unless told where to
         # put it, so name both the executable and the object file explicitly.
-        "$cxx" /nologo "/std:$std" /EHsc /O2 "$@" "$src" \
-            /Fe:"$out" /Fo:"${out%.exe}.obj"
+        #
+        # The options are written with a leading dash rather than a slash: cl
+        # accepts either, but under MSYS/Git bash a bare /flag looks like an
+        # absolute path and gets rewritten to C:/Program Files/Git/flag.
+        "$cxx" -nologo "-std:$std" -EHsc -O2 "$@" "$src" \
+            -Fe:"$out" -Fo:"${out%.exe}.obj"
         ;;
     *)
         std=${CXXSTD:-$(pick_std -std= || echo c++17)}
