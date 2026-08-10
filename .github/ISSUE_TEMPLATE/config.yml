@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Problem statement
+    url: https://leetcode.com/problemset/
+    about: Questions about a problem itself belong on LeetCode, not here.

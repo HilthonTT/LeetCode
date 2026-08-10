@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Cheap structural checks first: a misnamed file or a missing problem header
+  # is worth catching before spending a build matrix on it.
+  conventions:
+    name: Conventions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check layout, file names and headers
+        run: ./scripts/check-conventions.sh
+
+  build:
+    name: Build & run (${{ matrix.os }} / ${{ matrix.cxx }})
+    needs: conventions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cxx: g++-14
+          - os: windows-latest
+            cxx: cl
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GCC 14
+        if: matrix.cxx == 'g++-14'
+        run: sudo apt-get update && sudo apt-get install -y g++-14
+
+      - name: Set up MSVC
+        if: matrix.cxx == 'cl'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      # Every solution is standalone, so each is compiled and executed on its
+      # own. A solution reports its own checks as PASS/FAIL lines rather than
+      # through the exit code, so both are treated as failure signals.
+      - name: Compile and run every solution
+        shell: bash
+        env:
+          CXX: ${{ matrix.cxx }}
+        run: ./scripts/run-all.sh

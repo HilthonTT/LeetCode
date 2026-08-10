@@ -1,0 +1,41 @@
+name: Wrong answer
+description: A solution returns the wrong result, crashes, or fails to compile
+labels: [bug]
+body:
+  - type: input
+    id: problem
+    attributes:
+      label: Problem
+      description: Number and title, as LeetCode writes them.
+      placeholder: 1. Two Sum
+    validations:
+      required: true
+
+  - type: textarea
+    id: input
+    attributes:
+      label: Input
+      description: The input that shows the difference, and what the solution should return for it.
+      placeholder: |
+        nums = [3, 3], target = 6
+        expected [0, 1], got []
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Actual output
+      description: What the compiled solution printed, or the compiler error if it does not build.
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: toolchain
+    attributes:
+      label: Compiler
+      description: Compiler, version and standard — a solution that fails under only one toolchain is a different bug.
+      placeholder: g++ 14.2, -std=c++23
+    validations:
+      required: false

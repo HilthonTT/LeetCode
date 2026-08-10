@@ -74,12 +74,6 @@ Testing/
 # *.exe does above. Ignore the contents of the solution directories instead and
 # let the sources back in explicitly — another kind of file kept alongside them
 # needs its own exception here.
-Easy/*
-Medium/*
-Hard/*
-!Easy/*.cpp
-!Medium/*.cpp
-!Hard/*.cpp
-!Easy/*.md
-!Medium/*.md
-!Hard/*.md
+solutions/*/*
+!solutions/*/*.cpp
+!solutions/*/*.md

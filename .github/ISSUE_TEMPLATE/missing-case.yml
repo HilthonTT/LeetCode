@@ -1,0 +1,22 @@
+name: Missing case
+description: A solution is correct but its checks miss a case worth covering
+labels: [coverage]
+body:
+  - type: input
+    id: problem
+    attributes:
+      label: Problem
+      description: Number and title, as LeetCode writes them.
+      placeholder: 1. Two Sum
+    validations:
+      required: true
+
+  - type: textarea
+    id: case
+    attributes:
+      label: Case
+      description: The input that is not covered, and why the constraints allow it.
+      placeholder: |
+        nums = [], target = 0 — the constraints allow an empty array and nothing exercises it.
+    validations:
+      required: true
