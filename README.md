@@ -33,11 +33,17 @@ cl /std:c++latest /EHsc <path-to-solution>.cpp
 ```
 
 A helper script picks the compiler and the newest standard it accepts, and writes the
-executable next to the source:
+executable next to the source. It comes in a shell and a PowerShell version; they take the
+same arguments and behave the same way:
 
 ```sh
 ./scripts/build.sh <path-to-solution>.cpp   # or just the file name — it is searched for
 make clean                                  # remove every binary and object file left behind
+```
+
+```powershell
+.\scripts\build.ps1 <path-to-solution>.cpp  # same, on Windows PowerShell 5.1 or PowerShell 7+
+make clean
 ```
 
 ## Contributing

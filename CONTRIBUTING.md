@@ -15,7 +15,7 @@ only under one toolchain is a different bug from one that is simply wrong.
 
 One problem, one file, no shared headers: every file has to compile and run on its own.
 CI enforces the rules below on every push and pull request; run `./scripts/check-conventions.sh`
-locally to check them before pushing.
+(or `.\scripts\check-conventions.ps1`) locally to check them before pushing.
 
 **Location.** `solutions/<difficulty>/`, where the difficulty is `easy`, `medium` or
 `hard`, exactly as LeetCode assigns it.
@@ -55,5 +55,10 @@ is known to fail cannot be committed.
 and `./scripts/run-all.sh [difficulty...]` compiles and runs the whole set the way CI
 does. Both honour `CXX` and `CXXSTD`. `make clean` removes the binaries and object files
 they leave behind.
+
+Every script has a PowerShell twin — `build.ps1`, `run-all.ps1`, `check-conventions.ps1` —
+taking the same arguments, printing the same lines and returning the same exit codes, for
+Windows without a POSIX shell. They run on Windows PowerShell 5.1 as well as PowerShell 7+.
+Keep the two versions in step when changing either.
 
 Solutions target C++23, so they need GCC 14+, Clang 18+ or MSVC 19.3x+.
