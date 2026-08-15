@@ -2,7 +2,6 @@
 // https://leetcode.com/problems/maximum-product-of-two-digits/
 
 #include <iostream>
-#include <print>
 
 class Solution
 {
